@@ -5,32 +5,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultDiv = document.getElementById('result');
 
     greatestBtn.addEventListener('click', () => {
-        resultDiv.innerHTML = `This is the 5-digit Largest Number: ${largestFiveDigit()}`;
+        resultDiv.innerHTML = `This is the 5-digit Largest Number: <b>${largestFiveDigit()}</b>`;
     });
 
     smallestBtn.addEventListener('click', () => {
-        resultDiv.innerHTML = `This is the 5-digit Smallest Number: ${smallestFiveDigit()}`;
+        resultDiv.innerHTML = `This is the 5-digit Smallest Number: <b>${smallestFiveDigit()}</b>`;
     });
 
     function largestFiveDigit() {
-        return `<b>${99999}</b>`;
+        return 99999;
     }
 
     function smallestFiveDigit() {
-        return `<b>${10000}</b>`;
+        return 10000;
     }
 
     // Expand the given number
     const expandInput = document.getElementById("expandInput");
     const expandBtn = document.getElementById("expandBtn");
     const expandResult = document.getElementById("expandResult");
+    const placeValueChart = document.getElementById("placeValueChart");
 
     expandBtn.addEventListener("click", () => {
         const inputValue = Number(expandInput.value.trim());
-        if (inputValue) {
-            expandResult.innerHTML = `<b>Expanded form</b>: ${expandNumber(inputValue)}`;
+
+        if (isNaN(inputValue) || inputValue < 0 || inputValue > 99999) {
+            expandResult.innerHTML = 'Please enter a valid number between 1 and 99999.';
+            placeValueChart.innerHTML = ''; // Clear previous chart
         } else {
-            expandResult.innerHTML = `Please enter a valid number.`;
+            expandResult.innerHTML = `<b>Expanded form</b>: ${expandNumber(inputValue)}`;
+            createPlaceValueChart(inputValue);
         }
     });
 
@@ -45,12 +49,34 @@ document.addEventListener('DOMContentLoaded', () => {
             expandedForm += digit + "0".repeat(zeros);
             
             if (digit !== "0") {
-                    if (i < length - 1) {
+                if (i < length - 1) {
                     expandedForm += " + ";
                 }
             }
         }
 
         return expandedForm;
+    }
+
+    function createPlaceValueChart(num) {
+        const numStr = num.toString();
+        const length = numStr.length;
+        const placeValues = ['Units', 'Tens', 'Hundreds', 'Thousands', 'Ten Thousands'].slice(0 , length).reverse();
+        let chartHtml = '<h3>Place Value Chart</h3>';
+        chartHtml += '<table class="table table-bordered">';
+        chartHtml += '<thead><tr>';
+
+        placeValues.forEach(place => {
+            chartHtml += `<th>${place}</th>`;
+        });
+
+        chartHtml += '</tr></thead><tbody><tr>';
+
+        numStr.split('').forEach((digit) => {
+            chartHtml += `<td>${digit}</td>`;
+        });
+
+        chartHtml += '</tr></tbody></table>';
+        placeValueChart.innerHTML = chartHtml;
     }
 });
