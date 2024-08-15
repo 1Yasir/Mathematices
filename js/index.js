@@ -27,14 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const placeValueChart = document.getElementById("placeValueChart");
 
     expandBtn.addEventListener("click", () => {
-        const inputValue = Number(expandInput.value.trim());
+        const inputValue = expandInput.value.trim();
 
-        if (isNaN(inputValue) || inputValue < 0 || inputValue > 99999) {
-            expandResult.innerHTML = 'Please enter a valid number between 1 and 99999.';
+        if (inputValue === '') {
+            expandResult.innerHTML = 'Please enter a number to expand.';
             placeValueChart.innerHTML = ''; // Clear previous chart
         } else {
-            expandResult.innerHTML = `<b>Expanded form</b>: ${expandNumber(inputValue)}`;
-            createPlaceValueChart(inputValue);
+            const numValue = inputValue;
+            if (numValue < 0 || numValue > 99999) {
+                expandResult.innerHTML = 'Please enter a valid number between 1 and 99999.';
+                placeValueChart.innerHTML = ''; // Clear previous chart
+            } else {
+                expandResult.innerHTML = `<b>Expanded form</b>: ${expandNumber(numValue)}`;
+                createPlaceValueChart(numValue);
+            }
         }
     });
 
@@ -47,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const digit = numStr[i];
             const zeros = length - i - 1;
             expandedForm += digit + "0".repeat(zeros);
-            
+
             if (digit !== "0") {
                 if (i < length - 1) {
                     expandedForm += " + ";
@@ -61,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createPlaceValueChart(num) {
         const numStr = num.toString();
         const length = numStr.length;
-        const placeValues = ['Units', 'Tens', 'Hundreds', 'Thousands', 'Ten Thousands'].slice(0 , length).reverse();
+        const placeValues = ['Units', 'Tens', 'Hundreds', 'Thousands', 'Ten Thousands'].slice(0, length).reverse();
         let chartHtml = '<h3>Place Value Chart</h3>';
         chartHtml += '<table class="table table-bordered">';
         chartHtml += '<thead><tr>';
