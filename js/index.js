@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const numValue = inputValue;
             if (numValue < 0 || numValue > 99999) {
-                expandResult.innerHTML = 'Please enter a valid number between 1 and 99999.';
+                expandResult.innerHTML = 'Please enter a valid number between 0 and 99999.';
                 placeValueChart.innerHTML = ''; // Clear previous chart
             } else {
                 expandResult.innerHTML = `<b>Expanded form</b>: ${expandNumber(numValue)}`;
