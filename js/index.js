@@ -85,4 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
         chartHtml += '</tr></tbody></table>';
         placeValueChart.innerHTML = chartHtml;
     }
+
+
+    // standard Form of Number 
+
+    const standardInput = document.getElementById("standardInput");
+    const standardBtn = document.getElementById("expandBtn");
+    const standardResult = document.getElementById("standardResult");
+
 });
